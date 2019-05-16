@@ -1,0 +1,25 @@
+@import './constants';
+
+.app {
+    height: 100vh;
+    display: flex;
+}
+
+@media (max-width:$phone) {
+    .app {
+        flex-direction: column;
+    }
+}
+
+.left,
+.right {
+    flex: 1;
+}
+
+.left {
+    background: orange;
+}
+
+.right {
+    background: cyan;
+}

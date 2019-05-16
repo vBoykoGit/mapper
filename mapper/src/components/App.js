@@ -21,9 +21,9 @@ class Map extends React.Component {
 
   render() {
     // return <div ref={el => this.el = el} />;
-    return <div>
-      <div style={{ height: '10px', width: '10px', backgroundColor: 'blue' }}> 1 </div>
-      <div style={{ height: '10px', width: '10px', backgroundColor: "red" }}> 2 </div>
+    return <div className='app'>
+      <div className='left' > 1 </div>
+      <div className='right'> 2 </div>
     </div >
   }
 }
