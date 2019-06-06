@@ -13,10 +13,11 @@ class Search extends Component {
         window.addEventListener('load', this.handleLoad);
     }
 
-
     render() {
         return (
-            <input type="text" id="suggest" />
+            <div className='searchBar'>
+                <input className='searchBar' type="text" id="suggest" />
+            </div >
         );
     }
 }
