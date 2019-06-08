@@ -1,0 +1,5 @@
+export const routeConstants = {
+    ADD_POINT: 'ROUTE_ADD_POINT',
+    DELETE_POINT: 'ROUTE_DELETE_POINT',
+    CHANGE_POINT: 'ROUTE_CHANGE_POINT'
+};
