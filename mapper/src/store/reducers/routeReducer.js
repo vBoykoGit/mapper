@@ -1,4 +1,5 @@
-import { executorConstants } from '../constants/executorConstants';
+import { routeConstants } from '../constants/routeConstants';
+import { updateObjectInArray, removeItemFormArray } from '../../helpers';
 
 const initialState = { isExecuting: false };
 
@@ -6,18 +7,34 @@ const script = (state = initialState, action = {
     type: null
 }) => {
     switch (action.type) {
-        case executorConstants.START_REQUEST:
-            return state;
-        case executorConstants.START_SUCCESS:
+        case routeConstants.ADD_POINT: {
+            const { point } = action
+            const { points } = state
+
+            points.push(point)
             return {
                 ...state,
-                isExecuting: true
+                points
+            };
+        }
+        case routeConstants.CHANGE_POINT: {
+            const { point, newCoords } = action
+            const { points } = state
+
+            return {
+                ...state,
+                points: points.updateObjectInArray(points, 0, {})
             }
-        case executorConstants.STOP_REQUEST:
+        }
+        case routeConstants.DELETE_POINT: {
+            const { index } = action
+            const { points } = state
+
             return {
                 loggedIn: true,
-                userInfo: action.user
+                points: points.removeItemFormArray(points, index)
             };
+        }
         default:
             return state
     }
