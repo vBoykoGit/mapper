@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { reorder } from '../helpers';
 import RoutePoint from './RoutePoint';
+import { reorderArray } from '../otherFuncs/helpers';
 
 const grid = 8;
 
@@ -30,7 +30,7 @@ class List extends Component {
             return;
         }
 
-        const items = reorder(
+        const items = reorderArray(
             this.state.items,
             result.source.index,
             result.destination.index

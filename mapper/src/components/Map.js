@@ -17,7 +17,7 @@ class Map extends React.Component {
     componentDidMount() {
         const script = document.createElement("script");
 
-        script.src = "https://api-maps.yandex.ru/2.1/?lang=ru_RU";
+        script.src = "https://api-maps.yandex.ru/2.1/?apikey=efa426fb-e798-4c50-9b39-aef5e39578ad&lang=ru_RU";
         script.async = true;
 
         document.body.appendChild(script);

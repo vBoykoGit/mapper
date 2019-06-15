@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import AsyncSelect from 'react-select/lib/Async';
-
+import { suggestView } from '../otherFuncs/yandexMaps';
 
 class Search extends Component {
-    handleLoad() {
-        window.ymaps.ready(() => {
-            var suggestView = new window.ymaps.SuggestView('suggest');
-        });
+    state = {
+        tooltipText: ''
+    }
+
+    handleLoad = () => {
+        window.ymaps.ready(() => suggestView('suggest', this.handleSelection))
+    }
+
+    handleSelection = ({ error, object }) => {
+        this.setState({ tooltipText: '' })
+        if (error) {
+            this.setState({ tooltipText: error })
+        }
     }
 
     componentDidMount() {
@@ -15,8 +23,9 @@ class Search extends Component {
 
     render() {
         return (
-            <div className='searchBar'>
+            <div className='searchBar tooltip'>
                 <input className='searchBar' type="text" id="suggest" />
+                {this.state.tooltipText !== '' ? <span className="tooltiptext">{this.state.tooltipText}</span> : null}
             </div >
         );
     }

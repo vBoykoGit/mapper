@@ -1,9 +1,9 @@
 import { routeConstants } from '../constants/routeConstants';
-import { updateObjectInArray, removeItemFormArray } from '../../helpers';
+import { updateObjectInArray, removeItemFormArray } from '../../otherFuncs/helpers';
 
 const initialState = { isExecuting: false };
 
-const script = (state = initialState, action = {
+const routeReducer = (state = initialState, action = {
     type: null
 }) => {
     switch (action.type) {
@@ -40,4 +40,4 @@ const script = (state = initialState, action = {
     }
 }
 
-export default script
+export default routeReducer
