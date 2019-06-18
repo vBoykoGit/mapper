@@ -22,7 +22,7 @@ const route = (state = initialState, action = {
 
             return {
                 ...state,
-                points: points.updateObjectInArray(points, 0, {})
+                points: updateObjectInArray(points, 0, {})
             }
         }
         case routeConstants.DELETE_POINT: {
@@ -30,8 +30,8 @@ const route = (state = initialState, action = {
             const { points } = state
 
             return {
-                loggedIn: true,
-                points: points.removeItemFormArray(points, index)
+                ...state,
+                points: removeItemFormArray(points, index)
             };
         }
         default:

@@ -26,15 +26,15 @@ export function changePoint(point) {
     }
 }
 
-export function deletePoint(point) {
+export function deletePoint(index = NaN) {
     return dispatch => {
-        dispatch(deletePoint(point))
+        dispatch(deletePoint(index))
     };
 
-    function deletePoint(point) {
+    function deletePoint(index) {
         return {
             type: routeConstants.DELETE_POINT,
-            point
+            index
         }
     }
 }

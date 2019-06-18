@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import RoutePoint from './RoutePoint';
+import { RoutePoint } from './RoutePoint';
 import { reorderArray } from '../otherFuncs/helpers';
 import { connect } from "react-redux"
 
