@@ -4,18 +4,22 @@ export const suggestView = (elementId = '', onSelect = f => f) => {
             suggest: (request) => window.ymaps.suggest("Москва, " + request)
         }
     });
-    suggestView.events.add('select', async (event) => {
-        const { error, geoObject } = await geocode(event.get('item').value)
 
-        if (error) {
-            onSelect({ error })
-            return
+    document.getElementById(elementId).addEventListener("keypress", async (event) => {
+        if (event.key === 'Enter') {
+            const { error, geoObject } = await geocode(event.target.value)
+
+            if (error) {
+                onSelect({ error })
+                return
+            }
+            const address = addressFromGeoObject(geoObject)
+            onSelect({
+                geoObject,
+                ...address
+            })
+            event.target.value = ''
         }
-        const address = addressFromGeoObject(geoObject)
-        onSelect({
-            geoObject,
-            ...address
-        })
     })
 }
 
@@ -43,8 +47,6 @@ const geocode = (address = '') => {
             } else {
                 error = 'Уточните адрес';
             }
-
-            console.log(error, geoObject);
 
             if (error) {
                 resolve({ error })

@@ -1,9 +1,9 @@
 import { routeConstants } from '../constants/routeConstants';
 import { updateObjectInArray, removeItemFormArray } from '../../otherFuncs/helpers';
 
-const initialState = { isExecuting: false };
+const initialState = { points: [] };
 
-const routeReducer = (state = initialState, action = {
+const route = (state = initialState, action = {
     type: null
 }) => {
     switch (action.type) {
@@ -11,10 +11,9 @@ const routeReducer = (state = initialState, action = {
             const { point } = action
             const { points } = state
 
-            points.push(point)
             return {
                 ...state,
-                points
+                points: [...points, point]
             };
         }
         case routeConstants.CHANGE_POINT: {
@@ -40,4 +39,4 @@ const routeReducer = (state = initialState, action = {
     }
 }
 
-export default routeReducer
+export default route

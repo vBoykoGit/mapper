@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import RoutePoint from './RoutePoint';
 import { reorderArray } from '../otherFuncs/helpers';
+import { connect } from "react-redux"
 
 const grid = 8;
 
@@ -12,19 +13,7 @@ const getListStyle = isDraggingOver => ({
 
 class List extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [{ id: `1`, content: 'Якиманка' },
-            { id: `2`, content: 'Якиманка1' },
-            { id: `3`, content: 'Якиманка2' },
-            { id: `4`, content: 'Якиманка3' },
-            { id: `5`, content: 'Якиманка4' }]
-        };
-        this.onDragEnd = this.onDragEnd.bind(this);
-    }
-
-    onDragEnd(result) {
+    onDragEnd = (result) => {
         // dropped outside the list
         if (!result.destination) {
             return;
@@ -50,9 +39,7 @@ class List extends Component {
                         ref={provided.innerRef}
                         style={getListStyle(snapshot.isDraggingOver)}
                     >
-                        {this.state.items.map((item, index) => (
-                            <RoutePoint key={item.id} item={item} index={index} />
-                        ))}
+                        {this.props.points.map((item, index) => < RoutePoint key={item.id} item={item} index={index} />)}
                         {provided.placeholder}
                     </div>
                 )}
@@ -61,4 +48,15 @@ class List extends Component {
     }
 }
 
-export default List;
+const mapStateToProps = ({ route = {} }) => ({
+    points: route.points.map((item, index) => ({ id: index, content: item.getAddressLine() }))
+})
+
+const mapDispatchToProps = dispatch => ({
+    onSelection(point) {
+        // dispatch(addPoint(point))
+    }
+})
+
+const connectedList = connect(mapStateToProps, mapDispatchToProps)(List)
+export { connectedList as List }

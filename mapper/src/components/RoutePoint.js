@@ -7,7 +7,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 })
 
 const RoutePoint = ({ item, index }) =>
-    <Draggable draggableId={item.id} index={index}>
+    <Draggable draggableId={`${item.id}`} index={index}>
         {(provided, snapshot) => (
             <div
                 className='routePoint'
@@ -20,6 +20,7 @@ const RoutePoint = ({ item, index }) =>
                 )}
             >
                 {item.content}
+                <button>✖</button>
             </div>
         )}
     </Draggable>

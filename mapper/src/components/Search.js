@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { suggestView } from '../otherFuncs/yandexMaps';
+import { addPoint } from '../store/actions/routeActions';
+import { connect } from "react-redux"
 
 class Search extends Component {
     state = {
@@ -10,11 +12,14 @@ class Search extends Component {
         window.ymaps.ready(() => suggestView('suggest', this.handleSelection))
     }
 
-    handleSelection = ({ error, object }) => {
+    handleSelection = ({ error, geoObject }) => {
+        const { onSelection } = this.props
         this.setState({ tooltipText: '' })
         if (error) {
             this.setState({ tooltipText: error })
+            return
         }
+        onSelection(geoObject)
     }
 
     componentDidMount() {
@@ -25,10 +30,17 @@ class Search extends Component {
         return (
             <div className='searchBar tooltip'>
                 <input className='searchBar' type="text" id="suggest" />
-                {this.state.tooltipText !== '' ? <span className="tooltiptext">{this.state.tooltipText}</span> : null}
+                {this.state.tooltipText !== '' ? <span className="tooltiptext" >{this.state.tooltipText}</span> : null}
             </div >
         );
     }
 }
 
-export default Search;
+const mapDispatchToProps = dispatch => ({
+    onSelection(point) {
+        dispatch(addPoint(point))
+    }
+})
+
+const connectedSearch = connect(null, mapDispatchToProps)(Search)
+export { connectedSearch as Search }
