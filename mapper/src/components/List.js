@@ -39,7 +39,7 @@ class List extends Component {
                         ref={provided.innerRef}
                         style={getListStyle(snapshot.isDraggingOver)}
                     >
-                        {this.props.points.map((item, index) => < RoutePoint key={item.id} item={item} index={index} />)}
+                        {this.props.points.map((item, index) => < RoutePoint key={index} item={item} index={index} />)}
                         {provided.placeholder}
                     </div>
                 )}
@@ -49,7 +49,7 @@ class List extends Component {
 }
 
 const mapStateToProps = ({ route = {} }) => ({
-    points: route.points.map((item, index) => ({ id: index, content: item.getAddressLine() }))
+    points: route.points
 })
 
 const mapDispatchToProps = dispatch => ({

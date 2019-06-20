@@ -22,6 +22,23 @@ export const suggestView = (elementId = '', onSelect = f => f) => {
         }
     })
 }
+export const createMap = (mapId = '') => {
+    window.yandexMapInstance = new window.ymaps.Map(mapId, {
+        center: [55.76, 37.64],
+        zoom: 15,
+        controls: ['zoomControl', 'geolocationControl']
+    });
+}
+
+export const addGeoObjectOnMap = (geoObject) => {
+    const map = window.yandexMapInstance
+    const bounds = geoObject.properties.get('boundedBy')
+    // const mapState = window.ymaps.util.bounds.getCenterAndZoom(
+    //     bounds,
+    //     [map.width(), map.height()]
+    // )
+    map.geoObjects.add(geoObject)
+}
 
 const geocode = (address = '') => {
     return new Promise(resolve => {

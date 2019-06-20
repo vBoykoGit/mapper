@@ -1,8 +1,12 @@
 import { routeConstants } from '../constants/routeConstants';
+import { addGeoObjectOnMap } from '../../otherFuncs/yandexMaps';
+import { moveMapTo } from './mapActions';
 
 export function addPoint(point) {
     return dispatch => {
+        addGeoObjectOnMap(point)
         dispatch(addPoint(point))
+        dispatch(moveMapTo(point))
     };
 
     function addPoint(point) {

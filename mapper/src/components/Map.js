@@ -1,17 +1,12 @@
 import React from 'react';
 import ObjectsList from './ObjectsList';
 import '../styles/style.scss';
+import { createMap } from '../otherFuncs/yandexMaps';
 
 class Map extends React.Component {
 
     handleLoad() {
-        window.ymaps.ready(() => {
-            this.localMap = new window.ymaps.Map('map', {
-                center: [55.76, 37.64],
-                zoom: 15,
-                controls: ['zoomControl', 'geolocationControl', 'default']
-            });
-        });
+        window.ymaps.ready(() => createMap('yandexMap'));
     }
 
     componentDidMount() {
@@ -24,12 +19,12 @@ class Map extends React.Component {
         window.addEventListener('load', this.handleLoad);
     }
 
-    // componentWillUnmount() {
-    //   this.$el.somePlugin('destroy');
-    // }
+    componentWillUnmount() {
+        window.removeEventListener('load', this.handleLoad);
+    }
 
     render() {
-        return <div className='right' id="map"> </div>
+        return <div className='right' id="yandexMap"> </div>
     }
 }
 
