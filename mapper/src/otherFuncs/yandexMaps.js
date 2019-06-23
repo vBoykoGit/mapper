@@ -7,16 +7,14 @@ export const suggestView = (elementId = '', onSelect = f => f) => {
 
     document.getElementById(elementId).addEventListener("keypress", async (event) => {
         if (event.key === 'Enter') {
-            const { error, geoObject } = await geocode(event.target.value)
+            const { error, geoObject } = await createGeoObjectWithAddress(event.target.value)
 
             if (error) {
                 onSelect({ error })
                 return
             }
-            const address = addressFromGeoObject(geoObject)
             onSelect({
-                geoObject,
-                ...address
+                geoObject
             })
             event.target.value = ''
         }
@@ -32,15 +30,27 @@ export const createMap = (mapId = '') => {
 
 export const addGeoObjectOnMap = (geoObject) => {
     const map = window.yandexMapInstance
-    const bounds = geoObject.properties.get('boundedBy')
-    // const mapState = window.ymaps.util.bounds.getCenterAndZoom(
-    //     bounds,
-    //     [map.width(), map.height()]
-    // )
     map.geoObjects.add(geoObject)
 }
 
-const geocode = (address = '') => {
+export const removeGeoObjectOnMap = (geoObject) => {
+    const map = window.yandexMapInstance
+    map.geoObjects.remove(geoObject)
+}
+
+const createGeoObjectWithAddress = async (address = '') => {
+    const { error, geoObject } = await geocodeWithAddress(address)
+    if (geoObject) {
+        geoObject.events.add('dragend', function () {
+            backwardGeoObjectGeocode(geoObject);
+        });
+        console.log(geoObject.options.set({ draggable: true }));
+
+    }
+    return { error, geoObject }
+}
+
+const geocodeWithAddress = (address = '') => {
     return new Promise(resolve => {
         window.ymaps.geocode(address).then(function (res) {
             const geoObject = res.geoObjects.get(0)
@@ -71,6 +81,23 @@ const geocode = (address = '') => {
             resolve({ geoObject })
         })
     })
+}
+
+const backwardGeoObjectGeocode = (geoObject) => {
+    geoObject.properties.set('iconCaption', 'Search...');
+    const coords = geoObject.geometry.getCoordinates()
+    window.ymaps.geocode(coords).then(function (res) {
+        var firstGeoObject = res.geoObjects.get(0);
+
+        geoObject.properties
+            .set({
+                iconCaption: [
+                    firstGeoObject.getLocalities().length ? firstGeoObject.getLocalities() : firstGeoObject.getAdministrativeAreas(),
+                    firstGeoObject.getThoroughfare() || firstGeoObject.getPremise()
+                ].filter(Boolean).join(', '),
+                balloonContent: firstGeoObject.getAddressLine()
+            });
+    });
 }
 
 const addressFromGeoObject = (geoObject = {}) => {
