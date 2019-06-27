@@ -38,3 +38,17 @@ export function deletePoint(point = {}) {
         }
     }
 }
+
+export function reorderPoints(fromIndex, toIndex) {
+    return dispatch => {
+        dispatch(reorderPoints(fromIndex, toIndex))
+    };
+
+    function reorderPoints(fromIndex, toIndex) {
+        return {
+            type: routeConstants.REORDER_POINTS,
+            fromIndex,
+            toIndex
+        }
+    }
+}

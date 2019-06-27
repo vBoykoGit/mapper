@@ -26,8 +26,10 @@ export const removeGeoObject = (array, removeGeoObject) =>
         geoObject.properties.get('id') === removeGeoObject.properties.get('id'))
 
 export const reorderArray = (array, fromIndex, toIndex) => {
+    console.log(array);
+
     var newArray = [...array]
-    var element = newArray.splice(fromIndex, 1);
+    var [element] = newArray.splice(fromIndex, 1);
     newArray.splice(toIndex, 0, element);
     return newArray;
 }

@@ -1,7 +1,8 @@
 import { routeConstants } from '../constants/routeConstants';
 import {
     updateGeoObjects,
-    removeGeoObject
+    removeGeoObject,
+    reorderArray
 } from '../../otherFuncs/helpers';
 import { removeGeoObjectOnMap } from '../../otherFuncs/yandexMaps';
 
@@ -36,6 +37,16 @@ const route = (state = initialState, action = {
             return {
                 ...state,
                 points: removeGeoObject(points, index)
+            };
+        }
+        case routeConstants.REORDER_POINTS: {
+            const { fromIndex, toIndex } = action
+            const { points } = state
+            console.log(points);
+
+            return {
+                ...state,
+                points: reorderArray(points, fromIndex, toIndex)
             };
         }
         default:

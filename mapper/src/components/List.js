@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { RoutePoint } from './RoutePoint';
-import { reorderArray } from '../otherFuncs/helpers';
 import { connect } from "react-redux"
+import { reorderPoints } from '../store/actions/routeActions';
 
 const grid = 8;
 
@@ -14,20 +14,10 @@ const getListStyle = isDraggingOver => ({
 class List extends Component {
 
     onDragEnd = (result) => {
-        // dropped outside the list
         if (!result.destination) {
             return;
         }
-
-        const items = reorderArray(
-            this.state.items,
-            result.source.index,
-            result.destination.index
-        );
-
-        this.setState({
-            items
-        });
+        this.props.onDropItem(result.source.index, result.destination.index)
     }
 
     render() {
@@ -53,8 +43,8 @@ const mapStateToProps = ({ route = {} }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    onSelection(point) {
-        // dispatch(addPoint(point))
+    onDropItem(fromIndex, toIndex) {
+        dispatch(reorderPoints(fromIndex, toIndex))
     }
 })
 
