@@ -1,5 +1,9 @@
 import { routeConstants } from '../constants/routeConstants';
-import { updateObjectInArray, removeItemFormArray } from '../../otherFuncs/helpers';
+import {
+    updateGeoObjects,
+    removeGeoObject
+} from '../../otherFuncs/helpers';
+import { removeGeoObjectOnMap } from '../../otherFuncs/yandexMaps';
 
 const initialState = { points: [] };
 
@@ -17,12 +21,12 @@ const route = (state = initialState, action = {
             };
         }
         case routeConstants.CHANGE_POINT: {
-            const { point, newCoords } = action
+            const { point } = action
             const { points } = state
 
             return {
                 ...state,
-                points: updateObjectInArray(points, 0, {})
+                points: updateGeoObjects(points, point)
             }
         }
         case routeConstants.DELETE_POINT: {
@@ -31,7 +35,7 @@ const route = (state = initialState, action = {
 
             return {
                 ...state,
-                points: removeItemFormArray(points, index)
+                points: removeGeoObject(points, index)
             };
         }
         default:

@@ -1,12 +1,8 @@
 import { routeConstants } from '../constants/routeConstants';
-import { addGeoObjectOnMap, removeGeoObjectOnMap } from '../../otherFuncs/yandexMaps';
-import { moveMapTo } from './mapActions';
 
 export function addPoint(point = {}) {
     return dispatch => {
-        addGeoObjectOnMap(point)
         dispatch(addPoint(point))
-        dispatch(moveMapTo(point))
     };
 
     function addPoint(point) {
@@ -30,12 +26,9 @@ export function changePoint(point = {}) {
     }
 }
 
-export function deletePoint(index = NaN) {
+export function deletePoint(point = {}) {
     return (dispatch, getState) => {
-        const { route } = getState()
-        const { points } = route
-        removeGeoObjectOnMap(points[index])
-        dispatch(deletePoint(index))
+        dispatch(deletePoint(point))
     };
 
     function deletePoint(index) {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import { connect } from "react-redux"
-import { deletePoint } from '../store/actions/routeActions';
-import { moveMapTo } from '../store/actions/mapActions';
+import { moveMapTo, removePoint } from '../store/actions/mapActions';
+import { addressFromGeoObject } from '../otherFuncs/yandexMaps';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     background: isDragging ? "lightgrey" : "white",
@@ -23,15 +23,15 @@ const RoutePoint = ({ item, index, onClose, onHover }) =>
                 )}
                 onMouseEnter={() => onHover(item)}
             >
-                {item.getAddressLine()}
-                <button onClick={() => onClose(index)}>✖</button>
+                {item.properties.get('text')}
+                <button onClick={() => onClose(item)}>✖</button>
             </div>
         )}
     </Draggable>
 
 const mapDispatchToProps = dispatch => ({
-    onClose(index) {
-        dispatch(deletePoint(index))
+    onClose(item) {
+        dispatch(removePoint(item))
     },
     onHover(item) {
         dispatch(moveMapTo(item))

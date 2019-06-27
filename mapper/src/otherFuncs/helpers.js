@@ -16,6 +16,15 @@ export const updateObjectInArray = (array, updateIndex, newItem) =>
         }
     )
 
+export const updateGeoObjects = (array, newGeoObject) =>
+    array.map((geoObject) => {
+        return geoObject.properties.get('id') === newGeoObject.properties.get('id') ? geoObject : { ...newGeoObject }
+    })
+
+export const removeGeoObject = (array, removeGeoObject) =>
+    array.filter((geoObject) =>
+        geoObject.properties.get('id') === removeGeoObject.properties.get('id'))
+
 export const reorderArray = (array, fromIndex, toIndex) => {
     var newArray = [...array]
     var element = newArray.splice(fromIndex, 1);
