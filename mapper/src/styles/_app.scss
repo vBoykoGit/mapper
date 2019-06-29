@@ -19,8 +19,20 @@
 .left {
     background: orange;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    height: 100vh;
+
+    justify-self: center;
+    align-self: center;
 }
 
 .right {
     background: cyan;
+}
+
+.pointsList {
+    justify-self: center;
+    align-self: center;
 }

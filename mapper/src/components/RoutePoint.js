@@ -2,7 +2,6 @@ import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import { connect } from "react-redux"
 import { moveMapTo, removePoint } from '../store/actions/mapActions';
-import { addressFromGeoObject } from '../otherFuncs/yandexMaps';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     background: isDragging ? "lightgrey" : "white",

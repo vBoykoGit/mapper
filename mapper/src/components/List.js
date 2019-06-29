@@ -21,20 +21,22 @@ class List extends Component {
     }
 
     render() {
-        return <DragDropContext onDragEnd={this.onDragEnd}>
-            <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
-                    <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        style={getListStyle(snapshot.isDraggingOver)}
-                    >
-                        {this.props.points.map((item, index) => < RoutePoint key={index} item={item} index={index} />)}
-                        {provided.placeholder}
-                    </div>
-                )}
-            </Droppable>
-        </DragDropContext>
+        return <div className='pointsList'>
+            <DragDropContext onDragEnd={this.onDragEnd}>
+                <Droppable droppableId="droppable">
+                    {(provided, snapshot) => (
+                        <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            style={getListStyle(snapshot.isDraggingOver)}
+                        >
+                            {this.props.points.map((item, index) => < RoutePoint key={index} item={item} index={index} />)}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>
+        </div>
     }
 }
 

@@ -1,4 +1,3 @@
-import { changePoint } from '../store/actions/routeActions';
 import { v1 as uuidv1 } from 'uuid';
 import { updatePointCoords } from '../store/actions/mapActions';
 
@@ -31,6 +30,22 @@ export const createMap = (mapId = '') =>
         controls: ['zoomControl', 'geolocationControl']
     })
 
+export const drawRoute = (geoObjects) => {
+    const coords = geoObjects.map((geoObject) => geoObject.geometry.getCoordinates())
+    const route = new window.ymaps.GeoObject({
+        geometry: {
+            type: "LineString",
+            coordinates: coords
+        }
+    })
+
+    addGeoObjectOnMap(route)
+    return route
+}
+export const showGeoObject = (geoObject) => {
+    const map = window.yandexMapInstance
+    map.panTo(geoObject.geometry.getCoordinates())
+}
 export const addGeoObjectOnMap = (geoObject) => {
     const map = window.yandexMapInstance
     map.geoObjects.add(geoObject)
@@ -59,9 +74,10 @@ export const geoObjectFactory = async ({ coords, address }, dispatch) => {
 const configureGeoObjectWithDispatch = async (geoObject = {}, dispatch) => {
     geoObject.options.set({ draggable: true })
     geoObject.properties.set('id', uuidv1())
+    console.log(geoObject.properties.get('id')
+    );
 
     geoObject.events.add('dragend', async () => {
-
         const coords = geoObject.geometry.getCoordinates()
         dispatch(updatePointCoords(geoObject, coords))
     });
@@ -107,11 +123,4 @@ const geocodeWithCoords = (coords) => {
             resolve({ geoObject: res.geoObjects.get(0) })
         )
     )
-}
-
-export const addressFromGeoObject = (geoObject = {}) => {
-    const address = [geoObject.getCountry(), geoObject.getAddressLine()].join(', ')
-    const shortAddress = [geoObject.getThoroughfare(), geoObject.getPremiseNumber(), geoObject.getPremise()].join(' ')
-
-    return { address, shortAddress }
 }
