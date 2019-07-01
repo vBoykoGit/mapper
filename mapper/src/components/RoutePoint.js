@@ -4,15 +4,16 @@ import { connect } from "react-redux"
 import { moveMapTo, removePoint } from '../store/actions/mapActions';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
+    width: '100%',
     background: isDragging ? "lightgrey" : "white",
+    // margin: '0.5rem',
     ...draggableStyle
 })
 
 const RoutePoint = ({ item, index, onClose, onHover }) =>
-    <Draggable draggableId={`${index}`} index={index}>
+    <Draggable style={{ width: '100%' }} draggableId={`${index}`} index={index}>
         {(provided, snapshot) => (
             <div
-                className='routePoint'
                 ref={provided.innerRef}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
@@ -22,8 +23,10 @@ const RoutePoint = ({ item, index, onClose, onHover }) =>
                 )}
                 onMouseEnter={() => onHover(item)}
             >
-                {item.properties.get('text')}
-                <button onClick={() => onClose(item)}>✖</button>
+                <div className='routePoint'>
+                    {item.properties.get('text')}
+                    <div className='closeButton' onClick={() => onClose(item)}>✖</div>
+                </div>
             </div>
         )}
     </Draggable>

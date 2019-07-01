@@ -4,11 +4,10 @@ import { RoutePoint } from './RoutePoint';
 import { connect } from "react-redux"
 import { reorderPoints } from '../store/actions/routeActions';
 
-const grid = 8;
 
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "white" : "white",
-    padding: grid
+    width: '100%'
 });
 
 class List extends Component {

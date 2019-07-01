@@ -1,4 +1,17 @@
 .routePoint {
     user-select: none;
-    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 4rem;
+    padding: 0.5rem;
+}
+
+.routePoint:hover {
+    background-color: lightgrey;
+}
+
+.closeButton {
+    font-size: x-large;
+    color: red;
 }
